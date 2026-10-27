@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: quiznest-api
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    disk:
+      name: quiznest-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
