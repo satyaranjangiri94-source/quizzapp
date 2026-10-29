@@ -96,3 +96,102 @@ main>section{animation:viewIn .32s cubic-bezier(.2,.8,.2,1) both}@keyframes view
     perspective: none;
   }
 }
+
+
+/* Homepage conversion pass: clear CTA hierarchy without fake urgency or social proof. */
+.hero-actions .join-cta {
+  color: #fff;
+  background: #2563eb;
+  border-color: #1d4ed8;
+}
+.hero-actions .join-cta:hover {
+  background: #1d4ed8;
+  box-shadow: 0 4px 0 #bfdbfe;
+}
+.hero-actions .quick-hero {
+  color: #153b2a;
+  background: #a8e6cf;
+  border-color: #37765b;
+}
+.hero-actions .quick-hero:hover {
+  background: #8bd9b9;
+  box-shadow: 0 4px 0 #c8eadb;
+}
+.hero-actions button:focus-visible,
+.home-proof button:focus-visible {
+  outline: 3px solid #8b7bd5;
+  outline-offset: 3px;
+}
+.home-proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 22px 0 35px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.proof-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.proof-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  background: #fff7d9;
+  font-size: 11px;
+  font-weight: 800;
+}
+.proof-item b {
+  display: block;
+  margin: 2px 0 5px;
+  font-family: Nunito, sans-serif;
+  font-size: 13px;
+}
+.proof-item p {
+  margin: 0;
+  color: #686963;
+  font-size: 12px;
+  line-height: 1.55;
+}
+:root[data-theme="dark"] .hero-actions .join-cta {
+  background: #2563eb;
+  border-color: #60a5fa;
+  color: #fff;
+}
+:root[data-theme="dark"] .hero-actions .quick-hero {
+  background: #a8e6cf;
+  border-color: #37765b;
+  color: #153b2a;
+}
+:root[data-theme="dark"] .proof-mark {
+  background: #3a3525;
+}
+:root[data-theme="dark"] .proof-item p {
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .home-proof {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px 0 25px;
+  }
+  .proof-item {
+    align-items: center;
+  }
+  .proof-item p {
+    font-size: 12px;
+  }
+}
+@media (max-width: 480px) {
+  .hero-actions .join-cta,
+  .hero-actions .quick-hero {
+    min-height: 44px;
+  }
+}
