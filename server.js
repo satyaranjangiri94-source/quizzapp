@@ -23,9 +23,9 @@ function persist() {
 }
 const app = express();
 const server = createServer(app);
-const configuredOrigins = String(process.env.FRONTEND_URL || '').split(',').map(value => value.trim().replace(/\\/$/, '')).filter(Boolean);
+const configuredOrigins = String(process.env.FRONTEND_URL || '').split(',').map(value => value.trim().replace(/\/$/, '')).filter(Boolean);
 const allowOrigin = (origin, callback) => {
-  if (!origin || configuredOrigins.length === 0 || configuredOrigins.includes(origin.replace(/\\/$/, ''))) return callback(null, true);
+  if (!origin || configuredOrigins.length === 0 || configuredOrigins.includes(origin.replace(/\/$/, ''))) return callback(null, true);
   return callback(null, false);
 };
 const io = new Server(server, { cors: { origin: allowOrigin, credentials: true } });
