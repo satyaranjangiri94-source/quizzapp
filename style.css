@@ -588,3 +588,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion:reduce) {
   .quizcard,.wall-card,.friend-card,.overview-stat,.recent-game { transition:none !important; }
 }
+
+/* Room identity and searchable quiz shelf */
+.quiz-tools{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 18px}
+.quiz-search{display:flex;align-items:center;gap:10px;width:min(100%,420px);padding:0 13px;border:1px solid var(--line);border-radius:10px;background:#fffdf8;color:#77766e}
+.quiz-search>span{font-size:24px;line-height:1}
+.quiz-search input{width:100%;min-width:0;margin:0;padding:13px 0;border:0;background:transparent;color:var(--ink);outline:none;box-shadow:none!important}
+.quiz-search:focus-within{border-color:#847238;box-shadow:0 0 0 3px #ffd96655}
+.quiz-count{font-size:12px;color:#77766e;white-space:nowrap}
+.search-empty{margin-top:8px}
+.join-identity{display:flex;align-items:center;gap:13px;margin:24px 0 28px;padding:14px;background:#f2f0e8;border:1px solid var(--line);border-radius:12px}
+.join-avatar{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border:1.5px solid var(--ink);border-radius:15px;background:var(--mint);font:900 20px Nunito}
+.join-identity>div{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.join-identity small{font-size:9px;letter-spacing:1.1px;color:#77766e;font-weight:800}
+.join-identity strong{font:800 17px Nunito;overflow-wrap:anywhere}
+.join-identity>div>span{font-size:11px;color:#77766e}
+.join-identity>.textbtn{font-size:11px;white-space:nowrap}
+@media(max-width:480px){.quiz-tools{align-items:stretch;flex-direction:column;gap:8px}.quiz-search{width:100%}.quiz-count{align-self:flex-end}.join-identity{gap:9px;padding:11px}.join-identity>.textbtn{font-size:10px;padding:4px}}
