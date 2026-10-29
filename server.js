@@ -46,7 +46,9 @@ app.post('/api/auth/register', async (req, res) => {
   if (password.length < 8 || password.length > 128) return res.status(400).json({ error: 'Password must be 8–128 characters.' });
   if (db.users.some(u => u.email === email)) return res.status(409).json({ error: 'An account with that email already exists.' });
   let friendCode = code6(); while (db.users.some(u => u.friendCode === friendCode)) friendCode = code6();
-  const requestedName = String(req.body?.displayName || '').trim().replace(/\\s+/g, ' ').slice(0, 20);\n  const displayName = requestedName || email.split('@')[0].slice(0, 20) || 'Player';\n  const user = { id: randomUUID(), email, displayName, password: await bcrypt.hash(password, 12), friendCode };
+  const requestedName = String(req.body?.displayName || '').trim().replace(/\s+/g, ' ').slice(0, 20);
+  const displayName = requestedName || email.split('@')[0].slice(0, 20) || 'Player';
+  const user = { id: randomUUID(), email, displayName, password: await bcrypt.hash(password, 12), friendCode };
   db.users.push(user); await persist(); req.session.userId = user.id; res.status(201).json({ user: publicUser(user) });
 });
 app.post('/api/auth/login', async (req, res) => {
@@ -55,7 +57,12 @@ app.post('/api/auth/login', async (req, res) => {
   if (!user || !await bcrypt.compare(String(req.body?.password || ''), user.password)) return res.status(401).json({ error: 'Email or password is incorrect.' });
   req.session.userId = user.id; res.json({ user: publicUser(user) });
 });
-app.patch('/api/profile', requireUser, async (req, res) => {\n  const displayName = String(req.body?.displayName || '').trim().replace(/\\s+/g, ' ');\n  if (!displayName || displayName.length > 20 || /[\\u0000-\\u001f\\u007f]/.test(displayName)) return res.status(400).json({ error: 'Username must be 1–20 characters and cannot contain control characters.' });\n  const user = me(req); user.displayName = displayName; await persist(); res.json({ user: publicUser(user) });\n});\napp.post('/api/auth/logout', (req, res) => req.session.destroy(() => { res.clearCookie('connect.sid'); res.json({ ok: true }); }));
+app.patch('/api/profile', requireUser, async (req, res) => {
+  const displayName = String(req.body?.displayName || '').trim().replace(/\s+/g, ' ');
+  if (!displayName || displayName.length > 20 || /[\u0000-\u001f\u007f]/.test(displayName)) return res.status(400).json({ error: 'Username must be 1–20 characters and cannot contain control characters.' });
+  const user = me(req); user.displayName = displayName; await persist(); res.json({ user: publicUser(user) });
+});
+app.post('/api/auth/logout', (req, res) => req.session.destroy(() => { res.clearCookie('connect.sid'); res.json({ ok: true }); }));
 
 app.get('/api/quizzes', (req, res) => {
   const user = me(req); const owner = user?.id || String(req.query.user || '');
