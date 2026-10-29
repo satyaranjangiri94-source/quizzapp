@@ -195,3 +195,44 @@ main>section{animation:viewIn .32s cubic-bezier(.2,.8,.2,1) both}@keyframes view
     min-height: 44px;
   }
 }
+
+
+/* Accessibility: screen-reader headings, keyboard skip link and visible focus. */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--yellow);
+  color: #25282b;
+  font-weight: 800;
+  transform: translateY(-160%);
+  transition: transform .15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid #6d5bd0;
+  outline-offset: 3px;
+}
+main:focus {
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
