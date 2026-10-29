@@ -627,3 +627,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .starter-actions button{font-size:11px;padding:9px 11px}
 @media(max-width:850px){.starter-grid{grid-template-columns:1fr 1fr}.starter-card:last-child{grid-column:span 2}}
 @media(max-width:560px){.starter-shelf{padding:14px}.starter-grid{grid-template-columns:1fr}.starter-card:last-child{grid-column:auto}.starter-heading{align-items:flex-start;flex-direction:column}.savebar{align-items:stretch;flex-direction:column}.publish-button{width:100%;min-width:0}.savebar>span{line-height:1.5}}
+
+
+/* Quiz reliability improvements: clear cloud status and keep feedback above fixed navigation. */
+.sync-status{display:flex;align-items:center;gap:9px;width:fit-content;max-width:100%;margin:-8px 0 22px;padding:9px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper,#f6f3eb);color:var(--ink);font-size:12px;font-weight:800;line-height:1.4}
+.sync-status i{display:block;width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#b98518;box-shadow:0 0 0 3px #b985181c}
+.sync-status.is-online i{background:#27845d;box-shadow:0 0 0 3px #27845d1d}
+.sync-status.is-offline i{background:#c17b18;box-shadow:0 0 0 3px #c17b181c}
+.sync-status.is-syncing i{animation:syncPulse 1.2s ease-in-out infinite}
+@keyframes syncPulse{50%{opacity:.35;transform:scale(.82)}}
+.publish-button:disabled,.primary:disabled{cursor:wait;opacity:.72;transform:none;box-shadow:none}
+.toast{z-index:10000;bottom:calc(20px + env(safe-area-inset-bottom));width:max-content;max-width:min(560px,calc(100vw - 28px));text-align:center;white-space:normal;overflow-wrap:anywhere;pointer-events:none;border:1px solid #ffffff26}
+@media(max-width:1100px){.toast{bottom:calc(80px + env(safe-area-inset-bottom))}.sync-status{margin-top:-4px;margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){.sync-status.is-syncing i{animation:none}.toast{animation:none}}
