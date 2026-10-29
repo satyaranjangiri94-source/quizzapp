@@ -532,3 +532,6 @@ main:focus {
 }
 .auth-panel form button[type="submit"] { min-height: 46px; }
 .auth-panel form button[type="submit"]:disabled { cursor: progress; }
+
+/* Homepage simplification: use the available width instead of reserving a second sidebar. */
+@media (min-width: 1101px) { body { padding-right: 0 !important; } .right-rail { display:none !important; } main { max-width: 1060px; } }
