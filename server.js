@@ -23,16 +23,21 @@ function persist() {
 }
 const app = express();
 const server = createServer(app);
-const allowedOrigin = process.env.FRONTEND_URL || true;
-const io = new Server(server, { cors: { origin: allowedOrigin, credentials: true } });
+const configuredOrigins = String(process.env.FRONTEND_URL || '').split(',').map(value => value.trim().replace(/\/$/, '')).filter(Boolean);
+const allowOrigin = (origin, callback) => {
+  if (!origin || configuredOrigins.length === 0 || configuredOrigins.includes(origin.replace(/\/$/, ''))) return callback(null, true);
+  return callback(null, false);
+};
+const io = new Server(server, { cors: { origin: allowOrigin, credentials: true } });
 app.set('trust proxy', 1);
-app.use(cors({ origin: allowedOrigin, credentials: true }));
+app.use(cors({ origin: allowOrigin, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'change-this-secret-before-deploying-' + randomBytes(16).toString('hex'),
   resave: false, saveUninitialized: false,
   cookie: { httpOnly: true, sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', secure: process.env.NODE_ENV === 'production', maxAge: 7 * 86400000 }
 }));
+app.get('/api/health', (req, res) => res.json({ ok: true, service: 'quiznest-api', socketIo: true, timestamp: Date.now() }));
 const publicUser = u => ({ id: u.id, email: u.email, displayName: u.displayName || u.email.split('@')[0], friendCode: u.friendCode });
 const me = req => db.users.find(u => u.id === req.session.userId);
 const requireUser = (req, res, next) => { if (!me(req)) return res.status(401).json({ error: 'Please log in first.' }); next(); };
@@ -161,7 +166,25 @@ function beginQuestion(room) {
   broadcast(room); room.timer = setTimeout(() => reveal(room), room.quiz.questions[room.index].seconds * 1000);
 }
 app.post('/api/rooms', (req, res) => {
-  const quiz = req.body?.quiz; if (!quiz || !Array.isArray(quiz.questions) || !quiz.questions.length) return res.status(400).json({ error: 'Choose a quiz with questions first.' });
+  const source = req.body?.quiz;
+  if (!source || !Array.isArray(source.questions) || source.questions.length === 0) {
+    return res.status(400).json({ error: 'Choose a quiz with at least one question first.' });
+  }
+  const questions = source.questions.slice(0, 50).map(question => ({
+    text: String(question?.text || '').trim().slice(0, 500),
+    options: Array.isArray(question?.options) ? question.options.slice(0, 4).map(option => String(option ?? '').trim().slice(0, 250)) : [],
+    correct: Number.isInteger(Number(question?.correct)) ? Number(question.correct) : -1,
+    seconds: [10, 15, 20, 30, 45, 60].includes(Number(question?.seconds)) ? Number(question.seconds) : 20
+  }));
+  if (questions.some(question => !question.text || question.options.length !== 4 || question.options.some(option => !option) || question.correct < 0 || question.correct > 3)) {
+    return res.status(400).json({ error: 'This quiz has an incomplete question or answer. Open Customize, complete all four choices, and try again.' });
+  }
+  const quiz = {
+    id: String(source.id || randomUUID()).slice(0, 100),
+    title: String(source.title || 'Untitled quiz').trim().slice(0, 80) || 'Untitled quiz',
+    description: String(source.description || '').trim().slice(0, 300),
+    questions
+  };
   const code = roomCode(), hostKey = randomBytes(18).toString('hex');
   rooms.set(code, { code, hostKey, hostId: null, quiz, phase: 'lobby', players: new Map(), index: 0, round: 0, timer: null });
   res.status(201).json({ code, hostKey });
