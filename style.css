@@ -468,3 +468,45 @@ main:focus {
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .wall-grid { scroll-behavior: auto; }
 }
+
+
+/* Profile identity and friend-invite actions */
+.profile-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .9fr);
+  align-items: center;
+  gap: 22px;
+  margin: 0 0 18px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper, #fffdf8);
+}
+.profile-card h3 { margin: 8px 0 6px; font-size: 21px; }
+.profile-card p { margin: 0; color: var(--muted, #77766e); font-size: 13px; line-height: 1.55; }
+.profile-card form { min-width: 0; }
+.profile-card label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+.profile-name-row { display: flex; align-items: stretch; gap: 8px; }
+.profile-name-row input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface, white);
+  color: var(--ink);
+}
+.profile-name-row .primary { flex: 0 0 auto; padding: 11px 14px; }
+.friend-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.friend-actions .hostbtn { min-height: 38px; padding: 9px 12px; }
+.friend-card h3 { overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .profile-card { grid-template-columns: minmax(0, 1fr); gap: 15px; padding: 17px; }
+  .profile-card h3 { font-size: 19px; }
+  .profile-name-row { flex-direction: column; }
+  .profile-name-row input { min-height: 46px; font-size: 16px; }
+  .profile-name-row .primary { width: 100%; min-height: 46px; }
+  .friend-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .friend-actions button { min-width: 0; min-height: 42px; padding: 9px 8px; font-size: 11px; }
+}
