@@ -535,3 +535,56 @@ main:focus {
 
 /* Homepage simplification: use the available width instead of reserving a second sidebar. */
 @media (min-width: 1101px) { body { padding-right: 0 !important; } .right-rail { display:none !important; } main { max-width: 1060px; } }
+
+
+/* Dashboard polish: clearer hierarchy, useful activity and restrained interactions. */
+.home-overview { margin: -8px 0 42px; }
+.overview-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.overview-stat { min-width:0; display:flex; align-items:center; gap:13px; padding:17px 18px; border:1px solid var(--line); border-radius:15px; background:var(--surface,#fffdf8); }
+.stat-icon { flex:0 0 39px; width:39px; height:39px; display:grid; place-items:center; border:1px solid var(--line); border-radius:13px; color:var(--ink); font-size:18px; }
+.overview-stat>div { min-width:0; display:grid; gap:3px; }
+.overview-stat small { color:var(--muted,#77766e); font-size:9px; letter-spacing:1.1px; font-weight:800; }
+.overview-stat strong { color:var(--ink); font:900 25px/1.1 Nunito,sans-serif; letter-spacing:-.5px; }
+.overview-stat span:not(.stat-icon) { color:var(--muted,#77766e); font-size:11px; }
+.recent-strip { margin-top:27px; padding:23px; border:1px solid var(--line); border-radius:18px; background:color-mix(in srgb,var(--paper) 76%,white); }
+.recent-strip-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:15px; }
+.recent-strip-head h2 { margin:7px 0 0; font:900 25px/1.1 Nunito,sans-serif; letter-spacing:-.7px; }
+.recent-game-list { display:grid; gap:8px; }
+.recent-game { min-width:0; display:flex; align-items:center; gap:12px; padding:12px 13px; border:1px solid var(--line); border-radius:12px; background:var(--surface,#fffdf8); }
+.recent-game-mark { flex:0 0 32px; width:32px; height:32px; display:grid; place-items:center; border-radius:10px; background:var(--mint); color:#244b3b; font-weight:900; }
+.recent-game>div { flex:1; min-width:0; display:grid; gap:4px; }
+.recent-game strong { overflow:hidden; color:var(--ink); font-size:13px; text-overflow:ellipsis; white-space:nowrap; }
+.recent-game small { color:var(--muted,#77766e); font-size:11px; }
+.recent-game>b { flex:0 0 auto; color:var(--ink); font:800 14px Nunito,sans-serif; }
+.recent-game>b small { font:600 10px 'DM Sans',sans-serif; }
+.recent-empty { display:flex; align-items:center; flex-wrap:wrap; gap:12px; padding:14px; border:1px dashed var(--line); border-radius:12px; }
+.recent-empty>span { display:grid; place-items:center; width:35px; height:35px; border-radius:11px; background:var(--yellow); }
+.recent-empty p { flex:1; min-width:180px; margin:0; color:var(--muted,#77766e); font-size:12px; line-height:1.55; }
+.recent-empty .secondary { padding:10px 12px; font-size:12px; }
+button, a, input, textarea, select { -webkit-tap-highlight-color:transparent; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline:3px solid #d7a900; outline-offset:3px; }
+@media (hover:hover) and (pointer:fine) {
+  .quizcard,.wall-card,.friend-card,.overview-stat,.recent-game { transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease; }
+  .quizcard:hover,.wall-card:hover,.friend-card:hover { transform:translateY(-2px); border-color:#d5c9a8; box-shadow:0 8px 24px #25282b0b; }
+  .overview-stat:hover,.recent-game:hover { border-color:#d5c9a8; }
+}
+@media (max-width:760px) {
+  .home-overview { margin:0 0 28px; }
+  .overview-stats { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+  .overview-stat { align-items:flex-start; flex-direction:column; gap:9px; padding:12px 10px; border-radius:13px; }
+  .stat-icon { width:32px; height:32px; flex-basis:32px; border-radius:10px; font-size:15px; }
+  .overview-stat strong { font-size:21px; }
+  .overview-stat small { font-size:8px; letter-spacing:.55px; }
+  .overview-stat span:not(.stat-icon) { font-size:10px; line-height:1.35; }
+  .recent-strip { margin-top:18px; padding:15px 12px; border-radius:15px; }
+  .recent-strip-head h2 { font-size:22px; }
+  .recent-strip-head .textbtn { font-size:11px; }
+  .recent-game { padding:10px 9px; gap:9px; }
+  .recent-game strong { font-size:12px; }
+  .recent-game>b { font-size:12px; }
+  .recent-empty { align-items:flex-start; }
+  .recent-empty p { min-width:calc(100% - 52px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .quizcard,.wall-card,.friend-card,.overview-stat,.recent-game { transition:none !important; }
+}
