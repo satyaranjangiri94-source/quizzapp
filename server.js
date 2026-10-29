@@ -60,11 +60,11 @@ app.post('/api/auth/login', async (req, res) => {
 app.post('/api/auth/google', async (req, res) => {
   try {
     const credential = String(req.body?.credential || '');
-    if (!credential || !process.env.GOOGLE_CLIENT_ID) return res.status(503).json({ error: 'Google sign-in is not configured. Set GOOGLE_CLIENT_ID on the API and VITE_GOOGLE_CLIENT_ID on the frontend.' });
+    if (!credential) return res.status(400).json({ error: 'Missing Google credential.' });
     const verified = await fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(credential));
     if (!verified.ok) return res.status(401).json({ error: 'Google sign-in could not be verified. Please try again.' });
     const claims = await verified.json();
-    if (claims.aud !== process.env.GOOGLE_CLIENT_ID || claims.email_verified !== 'true' || !claims.sub || !claims.email) return res.status(401).json({ error: 'Google account verification failed.' });
+    if (claims.aud !== '340776346318-hkg57974796tg20jmdckga1f27cici58.apps.googleusercontent.com' || claims.email_verified !== 'true' || !claims.sub || !claims.email) return res.status(401).json({ error: 'Google account verification failed.' });
     const email = String(claims.email).trim().toLowerCase();
     let user = db.users.find(u => u.email === email);
     if (!user) {
