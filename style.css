@@ -510,3 +510,19 @@ main:focus {
   .friend-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .friend-actions button { min-width: 0; min-height: 42px; padding: 9px 8px; font-size: 11px; }
 }
+
+
+/* Account form states */
+.auth-error {
+  margin: 14px 0 4px;
+  padding: 12px 14px;
+  border: 1px solid #e9a49c;
+  border-radius: 10px;
+  background: #fff0ed;
+  color: #8e2920;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.auth-panel form button[type="submit"] { min-height: 46px; }
+.auth-panel form button[type="submit"]:disabled { cursor: progress; }
