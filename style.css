@@ -605,3 +605,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .join-identity>div>span{font-size:11px;color:#77766e}
 .join-identity>.textbtn{font-size:11px;white-space:nowrap}
 @media(max-width:480px){.quiz-tools{align-items:stretch;flex-direction:column;gap:8px}.quiz-search{width:100%}.quiz-count{align-self:flex-end}.join-identity{gap:9px;padding:11px}.join-identity>.textbtn{font-size:10px;padding:4px}}
+
+/* Publish action and preloaded starter quizzes */
+.savebar{position:sticky;bottom:10px;z-index:5;gap:16px;padding:16px;margin:26px -8px 0;background:var(--paper,#f6f3eb);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 32px #29271d18}
+.publish-button{min-width:165px;min-height:48px;font-weight:900;box-shadow:0 5px 0 #c2a94d;transition:transform .15s ease,box-shadow .15s ease}
+.publish-button:hover{transform:translateY(-2px);box-shadow:0 7px 0 #c2a94d}
+.starter-shelf{margin:24px 0 32px;padding:22px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#fffdf8,#f0efe6)}
+.starter-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.starter-heading h3{font:900 25px Nunito;margin:5px 0}
+.starter-heading h3 span{color:#c59d27}
+.starter-heading p{font-size:12px;color:#77766e;margin:0}
+.starter-count{white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:7px 10px;font-size:9px;letter-spacing:1px;font-weight:900}
+.starter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.starter-card{min-width:0;padding:16px;border:1px solid var(--line);border-radius:13px;background:#fffefa;display:flex;flex-direction:column;align-items:flex-start}
+.starter-card-icon{display:grid;place-items:center;width:40px;height:40px;margin-bottom:14px;border-radius:12px;background:#f7e7a9;color:#373328;font-size:22px;font-weight:900}
+.starter-card:nth-child(2) .starter-card-icon{background:#d9eee1}
+.starter-card:nth-child(3) .starter-card-icon{background:#f4d8ce}
+.starter-card h4{font:900 16px Nunito;margin:10px 0 6px}
+.starter-card p{font-size:12px;line-height:1.55;color:#77766e;margin:0 0 18px;flex:1}
+.starter-actions{display:flex;flex-wrap:wrap;gap:8px;width:100%;margin-top:auto}
+.starter-actions button{font-size:11px;padding:9px 11px}
+@media(max-width:850px){.starter-grid{grid-template-columns:1fr 1fr}.starter-card:last-child{grid-column:span 2}}
+@media(max-width:560px){.starter-shelf{padding:14px}.starter-grid{grid-template-columns:1fr}.starter-card:last-child{grid-column:auto}.starter-heading{align-items:flex-start;flex-direction:column}.savebar{align-items:stretch;flex-direction:column}.publish-button{width:100%;min-width:0}.savebar>span{line-height:1.5}}
