@@ -236,3 +236,235 @@ main:focus {
 @media (prefers-reduced-motion: reduce) {
   .skip-link { transition: none; }
 }
+
+
+/* Mobile-first refinement: remove crowding, improve tap targets, and keep content clear of the bottom nav. */
+@media (max-width: 760px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: 60px;
+    padding: 0 14px;
+    gap: 8px;
+    backdrop-filter: blur(16px);
+  }
+  header .brand { flex: 0 0 auto; gap: 7px; font-size: 18px; }
+  header .logo { width: 30px; height: 30px; border-radius: 9px; font-size: 20px; }
+  header .utility-buttons { display: flex; gap: 5px; margin-left: auto; }
+  header .utility { width: 34px; height: 34px; border-radius: 10px; }
+  header .account-btn {
+    max-width: 86px;
+    min-height: 34px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+  main {
+    width: 100%;
+    max-width: 100%;
+    min-height: calc(100svh - 130px);
+    padding: 0 18px;
+  }
+  .content-layout { min-height: 0; }
+  .hero {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 24px 0 20px;
+    align-content: start;
+  }
+  .hero-copy { padding: 0; min-width: 0; }
+  .hero-copy .eyebrow { font-size: 9px; letter-spacing: 1.2px; }
+  .hero h1 {
+    max-width: 100%;
+    margin: 16px 0 13px;
+    font-size: clamp(43px, 12.3vw, 62px);
+    line-height: .99;
+    letter-spacing: -2.4px;
+    overflow-wrap: normal;
+  }
+  .hero-copy > p {
+    max-width: 38ch;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 9px;
+    width: 100%;
+    max-width: none;
+    margin-top: 20px;
+  }
+  .hero-actions button {
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .hero-actions .primary { grid-column: 1 / -1; }
+  .hero-actions .primary span { margin-left: 8px; }
+  .hero-copy .fine { margin-top: 13px; font-size: 9px; letter-spacing: .9px; }
+  .hero .art {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-width: 420px;
+    height: 210px;
+    margin: 22px auto 0;
+    opacity: 1;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .home-proof {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 7px 0 12px;
+  }
+  .proof-item { padding: 12px 0; gap: 12px; }
+  .proof-mark { flex-basis: 36px; width: 36px; height: 36px; }
+  .proof-item b { font-size: 13px; }
+  .proof-item p { font-size: 12px; line-height: 1.5; }
+  .home-wall, .friend-wall, .features { margin-top: 25px; }
+  .wall-head { align-items: center; gap: 10px; }
+  .wall-head h2 { font-size: 25px; line-height: 1.1; }
+  .wall-head .textbtn, .wall-head .secondary { flex: 0 0 auto; font-size: 11px; padding: 10px 11px; }
+  .wall-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    margin-right: -18px;
+    padding: 2px 18px 12px 1px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .wall-card {
+    flex: 0 0 min(78vw, 290px);
+    min-height: 160px;
+    padding: 16px;
+    scroll-snap-align: start;
+    border-radius: 15px;
+  }
+  .features { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .features > div { padding: 15px; border-radius: 14px; }
+  .features h3 { font-size: 16px; }
+  .features p { font-size: 13px; line-height: 1.6; }
+  .page { padding: 25px 0 28px; }
+  .pagehead {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    margin: 6px 0 22px;
+  }
+  .pagehead h2, .panel h2, .room h2, .results h2 {
+    font-size: clamp(29px, 8vw, 38px);
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+  }
+  .pagehead p, .panel > p { font-size: 14px; line-height: 1.6; }
+  .pagehead > .primary, .pagehead > .secondary { width: 100%; min-height: 46px; }
+  .panel {
+    width: 100%;
+    max-width: none;
+    margin: 22px auto 30px;
+    padding: 20px 17px;
+    border-radius: 16px;
+  }
+  .panel .back { margin-bottom: 24px; }
+  .panel label, .editor > label { margin-top: 18px; }
+  .panel input, .editor input:not([type="radio"]), textarea, select {
+    min-height: 46px;
+    font-size: 16px;
+  }
+  .wide { min-height: 48px; }
+  .editor { width: 100%; max-width: none; }
+  .editor .pagehead { align-items: stretch; }
+  .question-edit { margin: 15px 0; padding: 14px 12px; border-radius: 13px; }
+  .qhead { align-items: center; gap: 6px; flex-wrap: wrap; }
+  .qhead button { min-height: 36px; padding: 7px; margin-left: 0; }
+  .options-grid { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .option-edit { min-height: 46px; padding: 10px !important; font-size: 12px !important; }
+  .quizgrid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .quizcard { min-height: 0; padding: 16px; border-radius: 14px; }
+  .quizcard h3 { font-size: 20px; margin: 15px 0 8px; overflow-wrap: anywhere; }
+  .cardactions { flex-wrap: wrap; gap: 8px; }
+  .cardactions button { min-height: 40px; padding: 8px; }
+  .room { width: 100%; padding-bottom: 20px; }
+  .roomhead { align-items: stretch; flex-direction: column; gap: 14px; margin-top: 12px; }
+  .roomcode { width: 100%; }
+  .players { gap: 8px; margin: 18px 0; }
+  .playerchip { padding: 9px 12px; font-size: 12px; }
+  .answers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .answer { min-height: 54px; padding: 13px; text-align: left; border-radius: 12px; }
+  .podium { max-width: 100%; height: 220px; margin: 20px 0 8px; }
+  .podium-inner { gap: 8px; }
+  .p-col { width: min(25vw, 78px); }
+  .p-who { font-size: 10px; }
+  .p-score { font-size: 15px; }
+  .result-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .result-actions button { width: 100%; min-height: 46px; }
+  .right-rail { display: none !important; }
+  .sitefoot { padding: 18px 18px 22px; margin-bottom: calc(70px + env(safe-area-inset-bottom)); font-size: 11px; line-height: 1.6; }
+  .mobile-tabs {
+    height: calc(66px + env(safe-area-inset-bottom));
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px #17191d0a;
+  }
+  .mobile-tabs button {
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0 3px;
+    border-radius: 13px;
+    font-size: 10px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .mobile-tabs button.active { background: #ffe58a; color: #25282b; }
+  .mobile-tabs .quick-tab {
+    width: 46px;
+    height: 46px;
+    min-height: 46px;
+    margin-top: -17px;
+    justify-self: center;
+    border: 3px solid var(--paper);
+    border-radius: 16px;
+    background: #25282b;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0 4px 0 #bbb4a4;
+  }
+  .mobile-tabs.game-tabs { display: none; }
+  :root[data-theme="dark"] .mobile-tabs { background: color-mix(in srgb, #17191d 96%, transparent); }
+  :root[data-theme="dark"] .mobile-tabs button.active { background: #ffe58a; color: #25282b; }
+}
+@media (max-width: 380px) {
+  header { padding: 0 10px; gap: 5px; }
+  header .brand { font-size: 16px; gap: 5px; }
+  header .logo { width: 27px; height: 27px; font-size: 18px; }
+  header .account-btn { max-width: 68px; padding: 6px 7px; font-size: 10px; }
+  header .utility { width: 30px; height: 30px; }
+  main { padding: 0 14px; }
+  .hero h1 { font-size: clamp(39px, 11.8vw, 46px); letter-spacing: -1.9px; }
+  .hero-actions { gap: 7px; }
+  .hero-actions button { padding: 11px 7px; font-size: 12px; }
+  .mobile-tabs { padding-left: 5px; padding-right: 5px; }
+  .mobile-tabs button { font-size: 9px; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .wall-grid { scroll-behavior: auto; }
+}
