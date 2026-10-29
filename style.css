@@ -513,6 +513,12 @@ main:focus {
 
 
 /* Account form states */
+.google-signin { display:flex; justify-content:center; width:100%; min-height:42px; margin:18px 0 8px; }
+.google-config-note { margin:0; padding:10px 12px; border:1px solid var(--line); border-radius:9px; color:var(--muted,#777); font-size:12px; line-height:1.5; text-align:center; }
+.auth-divider { display:flex; align-items:center; gap:12px; margin:16px 0 4px; color:var(--muted,#777); font-size:11px; }
+.auth-divider:before,.auth-divider:after { content:""; flex:1; height:1px; background:var(--line); }
+.auth-panel { max-width:440px; }
+
 .auth-error {
   margin: 14px 0 4px;
   padding: 12px 14px;
@@ -526,3 +532,6 @@ main:focus {
 }
 .auth-panel form button[type="submit"] { min-height: 46px; }
 .auth-panel form button[type="submit"]:disabled { cursor: progress; }
+
+/* Homepage simplification: use the available width instead of reserving a second sidebar. */
+@media (min-width: 1101px) { body { padding-right: 0 !important; } .right-rail { display:none !important; } main { max-width: 1060px; } }

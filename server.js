@@ -57,6 +57,30 @@ app.post('/api/auth/login', async (req, res) => {
   if (!user || !await bcrypt.compare(String(req.body?.password || ''), user.password)) return res.status(401).json({ error: 'Email or password is incorrect.' });
   req.session.userId = user.id; res.json({ user: publicUser(user) });
 });
+app.post('/api/auth/google', async (req, res) => {
+  try {
+    const credential = String(req.body?.credential || '');
+    if (!credential || !process.env.GOOGLE_CLIENT_ID) return res.status(503).json({ error: 'Google sign-in is not configured. Set GOOGLE_CLIENT_ID on the API and VITE_GOOGLE_CLIENT_ID on the frontend.' });
+    const verified = await fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(credential));
+    if (!verified.ok) return res.status(401).json({ error: 'Google sign-in could not be verified. Please try again.' });
+    const claims = await verified.json();
+    if (claims.aud !== process.env.GOOGLE_CLIENT_ID || claims.email_verified !== 'true' || !claims.sub || !claims.email) return res.status(401).json({ error: 'Google account verification failed.' });
+    const email = String(claims.email).trim().toLowerCase();
+    let user = db.users.find(u => u.email === email);
+    if (!user) {
+      let friendCode = code6(); while (db.users.some(u => u.friendCode === friendCode)) friendCode = code6();
+      user = { id: randomUUID(), email, displayName: String(claims.name || email.split('@')[0]).trim().replace(/\s+/g, ' ').slice(0, 20) || 'Player', googleSub: claims.sub, friendCode, authProvider: 'google' };
+      db.users.push(user); await persist();
+    } else if (user.googleSub && user.googleSub !== claims.sub) {
+      return res.status(401).json({ error: 'This email is linked to a different Google identity.' });
+    } else if (!user.googleSub) { user.googleSub = claims.sub; await persist(); }
+    req.session.userId = user.id;
+    res.json({ user: publicUser(user) });
+  } catch (error) {
+    console.error('Google sign-in failed:', error);
+    res.status(500).json({ error: 'Google sign-in failed. Please try again.' });
+  }
+});
 app.patch('/api/profile', requireUser, async (req, res) => {
   const displayName = String(req.body?.displayName || '').trim().replace(/\s+/g, ' ');
   if (!displayName || displayName.length > 20 || /[\u0000-\u001f\u007f]/.test(displayName)) return res.status(400).json({ error: 'Username must be 1–20 characters and cannot contain control characters.' });
