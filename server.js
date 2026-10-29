@@ -179,7 +179,7 @@ io.on('connection', socket => {
     socket.data.room = code; socket.data.playerId = id; socket.join(code);
     cb({ id }); broadcast(room);
   });
-  socket.on('start', () => { const room = rooms.get(socket.data.room); if (!room || room.players.get(socket.data.playerId)?.id !== room.hostId || room.phase !== 'lobby' || room.players.size < 2) return; room.index = 0; room.round++; room.players.forEach(p => p.score = 0); beginQuestion(room); });
+  socket.on('start', () => { const room = rooms.get(socket.data.room); if (!room || room.players.get(socket.data.playerId)?.id !== room.hostId || room.phase !== 'lobby' || room.players.size < 1) return; room.index = 0; room.round++; room.players.forEach(p => p.score = 0); beginQuestion(room); });
   socket.on('answer', (choice, cb = () => {}) => {
     const room = rooms.get(socket.data.room), p = room?.players.get(socket.data.playerId);
     if (!room || room.phase !== 'question' || !p || p.hasAnswered) return cb({ error: 'Your answer has already been locked, or the question has ended.' });
